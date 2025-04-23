@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termômetro da Prioridade</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f9f9f9, #e8f0fe);
+      padding: 30px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #d9534f;
+      font-size: 2.4em;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1em;
+    }
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #e0f7fa;
+      border-left: 6px solid #00acc1;
+      border-radius: 8px;
+      font-size: 1.1em;
+    }
+    button {
+      background: #0275d8;
+      color: white;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 30px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #025aa5;
+    }
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.95em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌡️ Termômetro da Prioridade</h1>
+    <p style="text-align: center; font-size: 1.2em;">Preencha abaixo para saber se essa tarefa merece sua atenção agora ou pode esperar.</p>
+
+    <label for="tarefa">📝 Descreva a tarefa:</label>
+    <textarea id="tarefa" rows="3" placeholder="Ex: Enviar proposta para o cliente X"></textarea>
+
+    <label for="impacto">🔥 Qual o impacto dessa tarefa no seu objetivo principal?</label>
+    <select id="impacto">
+      <option value="1">1 - Nenhum impacto</option>
+      <option value="2">2 - Baixo impacto</option>
+      <option value="3">3 - Impacto médio</option>
+      <option value="4">4 - Alto impacto</option>
+      <option value="5">5 - Impacto direto e relevante</option>
+    </select>
+
+    <label for="prazo">⏳ Existe um prazo real ou urgência concreta?</label>
+    <select id="prazo">
+      <option value="flexivel">Prazo flexível</option>
+      <option value="urgente">Sim, é urgente/inadiável</option>
+      <option value="fabricado">Parece urgente, mas é fabricado</option>
+    </select>
+
+    <label for="energia">⚡ Qual o nível de energia que essa tarefa exige?</label>
+    <select id="energia">
+      <option value="baixa">Baixa</option>
+      <option value="media">Média</option>
+      <option value="alta">Alta</option>
+    </select>
+
+    <label for="energiaAtual">🔋 Como está sua energia agora?</label>
+    <select id="energiaAtual">
+      <option value="baixa">Baixa</option>
+      <option value="media">Média</option>
+      <option value="alta">Alta</option>
+    </select>
+
+    <button onclick="avaliarPrioridade()">📊 Avaliar Prioridade</button>
+
+    <div class="result" id="resultado" style="display:none;"></div>
+  </div>
+
+  <div class="footer">
+    <p>Angelo O. – Doutor do Empreendedor<br>📞 (41) 99229-2647</p>
+  </div>
+
+  <script>
+    function avaliarPrioridade() {
+      const impacto = parseInt(document.getElementById("impacto").value);
+      const prazo = document.getElementById("prazo").value;
+      const energia = document.getElementById("energia").value;
+      const energiaAtual = document.getElementById("energiaAtual").value;
+
+      let mensagem = "";
+
+      if (impacto >= 4 && prazo === "urgente" && energia === energiaAtual) {
+        mensagem = "✅ Essa tarefa merece sua atenção AGORA. Ela é estratégica, urgente e sua energia está compatível. Priorize!";
+      } else if (impacto >= 4 && prazo !== "urgente") {
+        mensagem = "📌 Alta prioridade, mas o prazo é flexível. Agende para um momento de foco e energia alta.";
+      } else if (impacto <= 2) {
+        mensagem = "🧹 Essa tarefa tem baixo impacto. Avalie se deve ser delegada, automatizada ou eliminada.";
+      } else if (impacto >= 3 && energia !== energiaAtual) {
+        mensagem = "⚠️ Cuidado! Essa tarefa exige mais energia do que você tem agora. Reagende ou se prepare antes de executar.";
+      } else {
+        mensagem = "🤔 Essa tarefa pode estar ocupando espaço sem gerar resultado real. Reavalie sua relevância.";
+      }
+
+      const resultado = document.getElementById("resultado");
+      resultado.innerText = mensagem;
+      resultado.style.display = "block";
+    }
+  </script>
+</body>
+</html>
